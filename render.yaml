@@ -7,14 +7,10 @@ services:
     healthCheckPath: /healthz
     envVars:
       - key: CATALOG_DSN
-        fromDatabase:
-          name: schema-vcs-catalog
-          property: connectionString
+        sync: false
+      
+      - key: DEMO_TARGET_DSN
+        sync: false
+        
       - key: APP_ENV
         value: render
-
-databases:
-  - name: schema-vcs-catalog
-    plan: free
-    databaseName: catalog
-    user: svcs
