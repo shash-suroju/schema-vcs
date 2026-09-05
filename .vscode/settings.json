@@ -1,0 +1,11 @@
+{
+  "tailwindCSS.includeLanguages": { "jinja-html": "html", "html": "html" },
+  "editor.quickSuggestions": { "strings": true },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": { "source.organizeImports": "explicit" }
+  },
+  "files.associations": { "*.html": "jinja-html" },
+  "[makefile]": { "editor.insertSpaces": false }
+}

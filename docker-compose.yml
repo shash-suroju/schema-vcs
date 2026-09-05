@@ -1,0 +1,45 @@
+services:
+  catalog_db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: svcs
+      POSTGRES_PASSWORD: svcs
+      POSTGRES_DB: catalog
+    ports: ["5433:5432"]
+    volumes: [catalog_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U svcs -d catalog"]
+      interval: 3s
+      retries: 10
+
+  target_db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: demo
+    ports: ["5434:5432"]
+    volumes: [target_data:/var/lib/postgresql/data]
+    command: >
+      postgres -c max_connections=200 -c shared_buffers=256MB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d demo"]
+      interval: 3s
+      retries: 10
+
+  app:
+    build: .
+    environment:
+      CATALOG_DSN: postgresql://svcs:svcs@catalog_db:5432/catalog
+      DEMO_TARGET_DSN: postgresql://app:app@target_db:5432/demo
+      APP_ENV: local
+    ports: ["8000:8000"]
+    volumes: ["./app:/code/app"]
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      catalog_db: { condition: service_healthy }
+      target_db: { condition: service_healthy }
+
+volumes:
+  catalog_data:
+  target_data:

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Schema VCS{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+</head>
+<body class="h-full text-slate-800">
+  <header class="border-b bg-white">
+    <div class="mx-auto max-w-5xl px-6 py-4 flex items-baseline gap-3">
+      <span class="font-semibold">Schema VCS</span>
+      <span class="text-xs text-slate-500">branch · diff · merge for Postgres schemas</span>
+    </div>
+  </header>
+  <main class="mx-auto max-w-5xl px-6 py-10">{% block content %}{% endblock %}</main>
+</body>
+</html>

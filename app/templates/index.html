@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-semibold">Hello</h1>
+<p class="mt-2 text-slate-600">Environment: <code>{{ env }}</code></p>
+<button class="mt-6 rounded bg-slate-900 px-4 py-2 text-white text-sm"
+        hx-get="/healthz" hx-target="#health" hx-swap="innerHTML">Check health</button>
+<pre id="health" class="mt-4 rounded bg-slate-900 p-4 text-xs text-slate-100"></pre>
+{% endblock %}
